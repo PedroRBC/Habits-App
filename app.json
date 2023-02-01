@@ -1,10 +1,28 @@
 {
   "expo": {
-    "name": "Habits-App",
+    "name": "Hábitos",
     "slug": "Habits-App",
-    "version": "1.0.0",
+    "version": "3.0.5",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#09090A"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#09090A"
+      },
+      "package": "com.habitsapp"
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "48d40190-137f-4160-9feb-ee8a712ed307"
+      }
+    }
   }
 }
