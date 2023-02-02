@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import analytics from '@react-native-firebase/analytics';
 import { BackButton } from "../components/Views/BackButton";
 import { CheckBox } from "../components/Views/CheckBox";
 import { Feather } from "@expo/vector-icons";
@@ -13,7 +14,7 @@ const avaiableWeekDays = ['Domingo', 'Segunda-feria', 'Terça-feira', 'Quarta-fe
 export function NewScreen() {
     const [weekDays, setWeekDays] = useState<number[]>([]);
     const [title, setTitle] = useState('')
-    const user = useContext(FireBaseContext)
+    const { user } = useContext(FireBaseContext)
 
 
     function handleToggleWeekDay(weekDayIndex: number) {
@@ -38,6 +39,10 @@ export function NewScreen() {
                     title,
                     avaliable_days: weekDays,
                     created_at: today
+                })
+            analytics()
+                .logEvent('newHabit', {
+                    weekDays: weekDays,
                 })
 
             setTitle('')

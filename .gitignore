@@ -2,6 +2,10 @@
 #
 .DS_Store
 
+# Builds
+
+*.apk
+
 # FireBase
 android/app/google-services.json
 
@@ -34,6 +38,7 @@ local.properties
 *.iml
 *.hprof
 .cxx/
+android/keys.txt
 
 # node.js
 #

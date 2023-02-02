@@ -5,7 +5,8 @@ import { Button } from "../Controllers/Button";
 import { FooterButton } from "../Controllers/FooterButton";
 import { Input } from "../Controllers/Input";
 
-import auth from "@react-native-firebase/auth"
+import auth from "@react-native-firebase/auth";
+import analytics from '@react-native-firebase/analytics';
 
 function isEmail(input) {
     let IsEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi
@@ -25,6 +26,9 @@ export function SignInForm() {
         setIsLoading(true);
         auth()
             .signInWithEmailAndPassword(email, password)
+            .then(() => {
+                analytics().logLogin({ method: 'email' })
+            })
             .catch(err => {
                 setIsLoading(false);
                 if (err.code == 'auth/wrong-password') {
