@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 
 export function AddButton() {
     const { navigate } = useNavigation();
+
     return (
         <TouchableOpacity
             onPress={() => { navigate('new') }}

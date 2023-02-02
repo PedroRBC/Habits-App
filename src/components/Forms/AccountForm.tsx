@@ -5,7 +5,9 @@ import { Input } from '../Controllers/Input';
 import { Button } from '../Controllers/Button';
 
 import auth from "@react-native-firebase/auth"
-import firestore from "@react-native-firebase/firestore"
+import firestore from "@react-native-firebase/firestore";
+import analytics from '@react-native-firebase/analytics';
+
 
 function isEmail(input) {
     let IsEmailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi
@@ -26,6 +28,8 @@ export function AccountForm() {
         auth()
             .createUserWithEmailAndPassword(email, password)
             .then(user => {
+                analytics()
+                    .logSignUp({ method: 'email' });
                 firestore()
                     .collection('users')
                     .doc(user.user.uid)

@@ -16,7 +16,7 @@ import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firest
 import { HabitDay, DAY_SIZE } from "../components/Views/HabitDay";
 import { Header } from "../components/Views/Header";
 import { Loading } from "../components/Views/Loading";
-import { AddButton } from "../components/Views/AddButton";
+import { AddButton } from "../components/Controllers/AddButton";
 import FireBaseContext from "../contexts/firebase";
 
 
@@ -30,13 +30,12 @@ type Summary = {
 
 export function HomeScreen() {
     const [loading, setLoading] = useState(true)
-    const user = useContext(FireBaseContext)
+    const { user } = useContext(FireBaseContext)
     const [summary, setSummary] = useState<Summary>([])
     const { navigate } = useNavigation();
 
     useEffect(() => {
         setLoading(true)
-        console.log('rodou')
         const subscribe = firestore()
             .collection('users')
             .doc(user.uid)

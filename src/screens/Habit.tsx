@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import analytics from '@react-native-firebase/analytics';
 import { Alert, ScrollView, Text, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { BackButton } from "../components/Views/BackButton";
@@ -24,7 +25,7 @@ interface possibleHabitsProps {
 
 export function HabitScreen() {
     const [loading, setLoading] = useState(true)
-    const user = useContext(FireBaseContext)
+    const { user } = useContext(FireBaseContext)
     const [possibleHabits, setPossibleHabits] = useState<possibleHabitsProps[]>([])
     const [completedHabits, setCompletedHabits] = useState<string[]>([]);
     const route = useRoute();
@@ -68,7 +69,6 @@ export function HabitScreen() {
                         return day.data()
                     })
                     if (!day) {
-                        console.log('n')
                         markedDaysReference
                             .add({
                                 date: today,
@@ -76,13 +76,11 @@ export function HabitScreen() {
                                 completed: [habitId]
                             })
                     }
+                });
+            analytics()
+                .logEvent('makeHabit', {
+                    weekDay: weekDay
                 })
-
-            if (completedHabits.includes(habitId)) {
-                setCompletedHabits(prevState => prevState.filter(habit => habit !== habitId))
-            } else {
-                setCompletedHabits(prevState => [...prevState, habitId])
-            }
 
         } catch (err) {
             console.error(err)
@@ -111,6 +109,7 @@ export function HabitScreen() {
                 setPossibleHabits(data)
                 setLoading(false)
             })
+
         return () => subscribePossible();
     }, [])
 
