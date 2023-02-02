@@ -2,6 +2,10 @@
 #
 .DS_Store
 
+# Builds
+
+*.apk
+
 # FireBase
 android/app/google-services.json
 
